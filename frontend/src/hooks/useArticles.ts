@@ -7,6 +7,8 @@ export function useArticles(filters: ArticleFilters) {
     queryKey: ["articles", filters],
     queryFn: () => fetchArticles(filters),
     placeholderData: (prev) => prev,
+    refetchInterval: 5 * 60 * 1000,
+    refetchIntervalInBackground: false,
   });
 }
 
