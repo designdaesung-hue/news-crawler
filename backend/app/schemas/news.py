@@ -16,7 +16,8 @@ class SourceOut(BaseModel):
     is_active: bool
     last_crawled_at: Optional[datetime]
 
-    model_config = {"from_attributes": True}
+    class Config:
+        orm_mode = True
 
 
 class ArticleOut(BaseModel):
@@ -31,7 +32,8 @@ class ArticleOut(BaseModel):
     crawled_at: datetime
     source: SourceOut
 
-    model_config = {"from_attributes": True}
+    class Config:
+        orm_mode = True
 
 
 class ArticleList(BaseModel):
