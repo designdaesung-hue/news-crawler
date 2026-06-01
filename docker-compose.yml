@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: news_backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+      - sqlite_data:/app/data
+    restart: unless-stopped
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: news_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # PostgreSQL (운영 환경용 — 기본 비활성화)
+  db:
+    image: postgres:16-alpine
+    container_name: news_db
+    profiles: ["prod"]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-news}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-news_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+volumes:
+  sqlite_data:
+  postgres_data:
