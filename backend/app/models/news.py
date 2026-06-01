@@ -22,10 +22,8 @@ class Category(str, enum.Enum):
 class SourceName(str, enum.Enum):
     GOOGLE_NEWS = "google_news"
     NAVER_NEWS = "naver_news"
-    CHOSUN = "chosun"
     JOONGANG = "joongang"
     HANI = "hani"
-    YONHAP = "yonhap"
 
 
 class Source(Base):
